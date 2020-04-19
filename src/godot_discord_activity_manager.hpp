@@ -104,11 +104,16 @@ public:
         return -1;
     }
 
-    void update_activity(Ref<Reference> p_activity, Ref<FuncRef> p_callback) {
+    void update_activity(Ref<GODOT_DISCORD_TYPE(Activity)> p_activity, Ref<FuncRef> p_callback) {
         if (check_native_binding()) {
-            GODOT_DISCORD_TYPE(Activity) *activity = static_cast<GODOT_DISCORD_TYPE(Activity) *>(p_activity.ptr());
-            if(activity && p_callback.is_valid()) {
-                activity_manager->UpdateActivity(activity->get_native_binding(), get_activity_callback_function(p_callback));
+            if(p_activity.is_valid()) {
+                if(p_callback.is_valid()) {
+                    activity_manager->UpdateActivity(p_activity->get_native_binding(), get_activity_callback_function(p_callback));
+                } else {
+                    Godot::print_error(String("Callback not valid!"), __func__, __FILE__, __LINE__);
+                }
+            } else {
+                Godot::print_error(String("Activity not valid!"), __func__, __FILE__, __LINE__);
             }
         }
     }

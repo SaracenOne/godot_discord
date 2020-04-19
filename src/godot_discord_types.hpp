@@ -78,7 +78,7 @@ public:                                                                         
 #define GODOT_VARIABLE_GET_OBJECT(Name, Type, Getter) \
     Ref< GODOT_DISCORD_TYPE(Type) > get_ ## Name ## () {Ref<GODOT_DISCORD_TYPE(Type)> return_val; return_val.instance(); if(return_val.is_valid()) { return_val->set_native_binding ## ( native_binding.Getter ## ()); return return_val; } else { return NULL;} }\
     \
-    void set_ ## Name ## ( Ref< GODOT_DISCORD_TYPE(Type) > p_val ) {}
+    void set_ ## Name ## ( Ref< GODOT_DISCORD_TYPE(Type) > p_val ) { Godot::print_error(String("Cannot assign this variable!"), __func__, __FILE__, __LINE__); }
 
 
 #define GODOT_VARIABLE_GET_SET_OBJECT(Name, Type, Getter, Setter) \
