@@ -81,10 +81,10 @@ public:                                                                         
     void set_ ## Name ## ( Ref< GODOT_DISCORD_TYPE(Type) > p_val ) { Godot::print_error(String("Cannot assign this variable!"), __func__, __FILE__, __LINE__); }
 
 
-#define GODOT_VARIABLE_GET_SET_OBJECT(Name, Type, Getter, Setter) \
+#define GODOT_VARIABLE_GET_SET_OBJECT(Name, Type, Getter) \
     Ref< GODOT_DISCORD_TYPE(Type) > get_ ## Name ## () {Ref<GODOT_DISCORD_TYPE(Type)> return_val; return_val.instance(); if(return_val.is_valid()) { return_val->set_native_binding ## ( native_binding.Getter ## ()); return return_val; } else { return NULL;} }\
     \
-    void set_ ## Name ## ( Ref< GODOT_DISCORD_TYPE(Type) > p_val ) {native_binding. ## Setter ## (p_val);}
+    void set_ ## Name ## ( Ref< GODOT_DISCORD_TYPE(Type) > p_val ) {memcpy(&native_binding. ## Getter ## (), &p_val->get_native_binding(), sizeof(GODOT_DISCORD_TYPE(Type)));}
 
 
 #define GODOT_VAL_BINDING(ClassName, Type, Name, DefaultValue) \
@@ -152,7 +152,7 @@ GODOT_DISCORD_DEFINE(PartySize, PARTY_SIZE_VARIABLE_MACROS, PARTY_SIZE_BIND_MACR
 
 #define ACTIVITY_PARTY_VARIABLE_MACROS \
     GODOT_VARIABLE_GET_SET_STRING(id, GetId, SetId) \
-    GODOT_VARIABLE_GET_OBJECT(party_size, PartySize, GetSize) \
+    GODOT_VARIABLE_GET_SET_OBJECT(party_size, PartySize, GetSize) \
 
 GODOT_DISCORD_DEFINE(ActivityParty, ACTIVITY_PARTY_VARIABLE_MACROS, ACTIVITY_PARTY_BIND_MACROS)
 
@@ -186,10 +186,10 @@ GODOT_DISCORD_DEFINE(ActivitySecrets, ACTIVITY_SECRETS_VARIABLE_MACROS, ACTIVITY
     GODOT_VARIABLE_GET_SET_STRING(name, GetName, SetName) \
     GODOT_VARIABLE_GET_SET_STRING(state, GetState, SetState) \
     GODOT_VARIABLE_GET_SET_STRING(details, GetDetails, SetDetails) \
-    GODOT_VARIABLE_GET_OBJECT(timestamps, ActivityTimestamps, GetTimestamps) \
-    GODOT_VARIABLE_GET_OBJECT(assets, ActivityAssets, GetAssets) \
-    GODOT_VARIABLE_GET_OBJECT(party, ActivityParty, GetParty) \
-    GODOT_VARIABLE_GET_OBJECT(secrets, ActivitySecrets, GetSecrets) \
+    GODOT_VARIABLE_GET_SET_OBJECT(timestamps, ActivityTimestamps, GetTimestamps) \
+    GODOT_VARIABLE_GET_SET_OBJECT(assets, ActivityAssets, GetAssets) \
+    GODOT_VARIABLE_GET_SET_OBJECT(party, ActivityParty, GetParty) \
+    GODOT_VARIABLE_GET_SET_OBJECT(secrets, ActivitySecrets, GetSecrets) \
     GODOT_VARIABLE_GET_SET_VAL(instance, GODOT_DISCORD_TYPE_BOOL, GODOT_DISCORD_TYPE_BOOL, GetInstance, SetInstance) \
 
 GODOT_DISCORD_DEFINE(Activity, ACTIVITY_VARIABLE_MACROS, ACTIVITY_BIND_MACROS)
