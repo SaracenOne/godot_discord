@@ -3,6 +3,7 @@
 
 #include "godot_discord_core.hpp"
 #include "godot_discord_activity_manager.hpp"
+#include "godot_discord_user_manager.hpp"
 
 extern "C" void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *o) {
 	godot::Godot::gdnative_init(o);
@@ -24,6 +25,7 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *handle) {
 	godot::register_class<godot::GODOT_DISCORD_TYPE(Activity)>();
 
 	godot::register_class<godot::GODOT_DISCORD_TYPE(ActivityManager)>();
-	
+	godot::register_class<godot::GODOT_DISCORD_TYPE(UserManager)>();
+
 	godot::register_class<godot::GODOT_DISCORD_TYPE(Core)>();
 }

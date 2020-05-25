@@ -8,6 +8,7 @@ void GODOT_DISCORD_TYPE(Core)::_register_methods() {
 	register_signal<GodotDiscordCore>("log", "level", GODOT_VARIANT_TYPE_INT, "message", GODOT_VARIANT_TYPE_STRING);
 
 	register_method("get_activity_manager", &GODOT_DISCORD_TYPE(Core)::get_activity_manager);
+	register_method("get_user_manager", &GODOT_DISCORD_TYPE(Core)::get_user_manager);
 
 	register_method("setup", &GODOT_DISCORD_TYPE(Core)::setup);
 	register_method("update_callbacks", &GODOT_DISCORD_TYPE(Core)::update_callbacks);
@@ -43,6 +44,13 @@ bool GODOT_DISCORD_TYPE(Core)::create_discord_core(int64_t p_client_id, uint64_t
 			activity_manager->assign_native_binding(native_activity_manager);
 		}
 
+		user_manager.instance();
+
+		if (user_manager.is_valid()) {
+			discord::UserManager *native_user_manager = &core->UserManager();
+			user_manager->assign_native_binding(native_user_manager);
+		}
+
 		return true;
 	};
 }
@@ -59,6 +67,10 @@ void GODOT_DISCORD_TYPE(Core)::log_problems_function(discord::LogLevel p_level, 
 
 Ref<GODOT_DISCORD_TYPE(ActivityManager)> GODOT_DISCORD_TYPE(Core)::get_activity_manager() {
 	return Ref<GODOT_DISCORD_TYPE(ActivityManager)>(activity_manager);
+}
+
+Ref<GODOT_DISCORD_TYPE(UserManager)> GODOT_DISCORD_TYPE(Core)::get_user_manager() {
+	return Ref<GODOT_DISCORD_TYPE(UserManager)>(user_manager);
 }
 
 bool GODOT_DISCORD_TYPE(Core)::setup(int64_t p_client_id, uint64_t p_flags) {

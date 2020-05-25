@@ -8,6 +8,7 @@
 #include "godot_discord_types.hpp"
 
 #include "godot_discord_activity_manager.hpp"
+#include "godot_discord_user_manager.hpp"
 
 #include "discord.h"
 
@@ -17,6 +18,7 @@ class GODOT_DISCORD_TYPE(Core) : public Reference {
 	GODOT_DISCORD_CLASS(Core, Reference)
 
 	Ref<GODOT_DISCORD_TYPE(ActivityManager)> activity_manager;
+	Ref<GODOT_DISCORD_TYPE(UserManager)> user_manager;
 
 	std::unique_ptr<discord::Core> core;
 	bool create_discord_core(int64_t p_client_id, uint64_t p_flags);
@@ -27,6 +29,7 @@ public:
 	static void _register_methods();
 
 	Ref<GODOT_DISCORD_TYPE(ActivityManager)> get_activity_manager();
+	Ref<GODOT_DISCORD_TYPE(UserManager)> get_user_manager();
 
 	void update_callbacks();
 
