@@ -8,6 +8,8 @@ void GODOT_DISCORD_TYPE(Core)::_register_methods() {
 	register_signal<GodotDiscordCore>("log", "level", GODOT_VARIANT_TYPE_INT, "message", GODOT_VARIANT_TYPE_STRING);
 
 	register_method("get_activity_manager", &GODOT_DISCORD_TYPE(Core)::get_activity_manager);
+	register_method("get_application_manager", &GODOT_DISCORD_TYPE(Core)::get_application_manager);
+	register_method("get_image_manager", &GODOT_DISCORD_TYPE(Core)::get_image_manager);
 	register_method("get_user_manager", &GODOT_DISCORD_TYPE(Core)::get_user_manager);
 
 	register_method("setup", &GODOT_DISCORD_TYPE(Core)::setup);
@@ -44,6 +46,20 @@ bool GODOT_DISCORD_TYPE(Core)::create_discord_core(int64_t p_client_id, uint64_t
 			activity_manager->assign_native_binding(native_activity_manager);
 		}
 
+		application_manager.instance();
+
+		if (application_manager.is_valid()) {
+			discord::ApplicationManager *native_application_manager = &core->ApplicationManager();
+			application_manager->assign_native_binding(native_application_manager);
+		}
+
+		image_manager.instance();
+
+		if (image_manager.is_valid()) {
+			discord::ImageManager *native_image_manager = &core->ImageManager();
+			image_manager->assign_native_binding(native_image_manager);
+		}
+
 		user_manager.instance();
 
 		if (user_manager.is_valid()) {
@@ -67,6 +83,14 @@ void GODOT_DISCORD_TYPE(Core)::log_problems_function(discord::LogLevel p_level, 
 
 Ref<GODOT_DISCORD_TYPE(ActivityManager)> GODOT_DISCORD_TYPE(Core)::get_activity_manager() {
 	return Ref<GODOT_DISCORD_TYPE(ActivityManager)>(activity_manager);
+}
+
+Ref<GODOT_DISCORD_TYPE(ApplicationManager)> GODOT_DISCORD_TYPE(Core)::get_application_manager() {
+	return Ref<GODOT_DISCORD_TYPE(ApplicationManager)>(application_manager);
+}
+
+Ref<GODOT_DISCORD_TYPE(ImageManager)> GODOT_DISCORD_TYPE(Core)::get_image_manager() {
+	return Ref<GODOT_DISCORD_TYPE(ImageManager)>(image_manager);
 }
 
 Ref<GODOT_DISCORD_TYPE(UserManager)> GODOT_DISCORD_TYPE(Core)::get_user_manager() {
