@@ -7,7 +7,7 @@ reloadable=true
 
 [entry]
 
-Windows.64="res://addons/godot_discord/libGodotDiscordGameSDK.dll"
+Windows.64="res://addons/godot_discord/bin/libGodotDiscordGameSDK.dll"
 
 [dependencies]
 
